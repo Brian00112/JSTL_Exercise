@@ -1,0 +1,38 @@
+def displayInfo(infoType)[
+
+    if ($infoType)
+    let type = $infoType.name
+    let Attribute = $infoType.addresses.attributes
+
+    {
+        "id": $infoType.id,
+        "type": $infoType.name,
+        "Attributes":{
+            "adressCategoryType": get-key($x,$type)[0],
+            "addressTypeCode":get-key($x,$type)[1],
+
+            //Addresses
+            "localityName":$Attribute.City,
+            "addressPostcode" : $Attribute.Postcode,
+            "addressStateCode" : $Attribute.RegionCode,
+            "addressCountryCode" : $Attribute.CountryCode,
+            "addressLine1" : $Attribute.Line1,
+            "addressLine2" : $Attribute.Line2,
+
+            //email and mobile
+            "phoneNumber": $infoType.attribues.Number,
+            "internetEmailAddress":$infoType.attributes.Email,
+            "countryCallingCode" : $infoType.attributes.CountryCallingCode,
+            "StartDate": $infoType.attributes.StartDate
+        },
+        "oidDigest": get-key($x,$type)[2]
+    }]
+
+    
+let x = { "RegisteredOfficeAddress":  ["G", 162,"1143470109"], "PlaceOfBusiness" : ["G",164,"457686347"], 
+"EmailAddress" : ["E",170,"-487739423"], "MobileAddress" : ["T",122,"-1415936973"]}
+   
+
+{
+     "addresses" : displayInfo(.registeredOfficeAddresses[0])+displayInfo(.ppobAddresses[0]) +displayInfo(.email) + displayInfo(.mobile)
+}
